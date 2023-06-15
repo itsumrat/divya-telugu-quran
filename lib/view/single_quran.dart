@@ -35,8 +35,8 @@ class _SingleQuranState extends State<SingleQuran> {
   var selectVoiceLanguage;
 
 
-  List<Map<String, dynamic>> suraListName = [
-  ];
+  List<Map<String, dynamic>> suraListName = [];
+  var suraName;
   List suraList = [];
 
   final List suraAyatList = [];
@@ -77,6 +77,7 @@ class _SingleQuranState extends State<SingleQuran> {
     super.initState();
     getSuraList();
     print("widget.suraName === ${widget.suraId}");
+    suraName = widget.suraName;
     suraVerseFuture = getSuraVerse(widget.suraId.toString());
   }
 
@@ -96,7 +97,7 @@ class _SingleQuranState extends State<SingleQuran> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
-        title: Text("${widget.suraName}"),
+        title: Text("${suraName}"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: ()async{
@@ -120,20 +121,25 @@ class _SingleQuranState extends State<SingleQuran> {
                   suraAyatList.isNotEmpty
                       ? Container(
                     width: size.width,
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
                     color: Colors.grey.shade100,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
                           onTap: (){
+                            print("i===== $i");
                             if(i > 0){
                               i--;
-                              // setState(() {
-                              //   selectedSura = suraListName[i]["name"];
-                              //   singleSuraVarsFuture = singleSura(suraId: suraListName[0]["id"], verse: "1-2");
-                              // });
+                              setState(() {
+                                suraVerseFuture = getSuraVerse(suraListName[i]["id"].toString());
+                                suraName = suraListName[i]!["name"];
+                                selectedSura = suraListName[i]!["id"].toString();
+                              });
                             }
+                            setState(() {
+
+                            });
 
                           },
                           child: Container(
@@ -159,7 +165,7 @@ class _SingleQuranState extends State<SingleQuran> {
                                 child: DropdownButton2(
                                   isExpanded:true,
                                   hint: Text(
-                                    '${widget.suraName}',
+                                    '${suraName}',
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Theme.of(context).hintColor,
@@ -179,15 +185,31 @@ class _SingleQuranState extends State<SingleQuran> {
                                     ],
                                   value: selectedSura,
                                   onChanged: (value) {
-                                    print("this is value ===${value}");
                                     setState(() {
                                       //suraAyatList.clear();
                                       selectedSura = value.toString();
+                                      for (var map in suraListName) {
+                                        if (map?.containsKey("id") ?? false) {
+                                          if (map!["id"].toString() == value.toString()) {
+                                            // your list of map contains key "id" which has value 3
+                                            suraName = map!["name"];
+                                            print("suraName --- === ${map!["index"]}");
+                                            i = int.parse("${map!["index"]}") - 1;
+
+                                            print("suraName --- === ${suraName}");
+                                            print("i suraName --- === ${i}");
+                                          }
+                                        }
+                                      }
+
+                                      print("suraName=== ${suraName}");
+
+
                                     });
                                     suraVerseFuture = getSuraVerse(value.toString());
                                   },
                                   buttonStyleData: const ButtonStyleData(
-                                    height: 40,
+                                    height: 30,
                                     width: 200,
                                   ),
                                   menuItemStyleData: const MenuItemStyleData(
@@ -201,11 +223,13 @@ class _SingleQuranState extends State<SingleQuran> {
                         InkWell(
                           onTap: (){
                             i++;
-                            // setState(() {
-                            //   selectedSura = suraListName[0]["name"];
-                            // //  singleSuraVarsFuture = singleSura(suraId: suraListName[0]["id"], verse: "1-2");
-                            //
-                            // });
+                            setState(() {
+                              suraName = suraListName[i]!["name"];
+                              selectedSura = suraListName[i]!["id"].toString();
+                              suraVerseFuture = getSuraVerse(suraListName[i]["id"].toString());
+                            });
+                            print("suraListName == ${suraListName[i]}");
+                            print("suraListName == ${i}");
                           },
                           child: Container(
                             width: 40,
@@ -222,7 +246,7 @@ class _SingleQuranState extends State<SingleQuran> {
                   )
                       : Text("No Verse available"),
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 10,),
                   Container(
                     width: size.width*.70,
                     height: 50,
@@ -264,7 +288,6 @@ class _SingleQuranState extends State<SingleQuran> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton2(
                                 isExpanded:true,
-
                                 hint: Text(
                                   '${suraAyatList[0]}',
                                   style: TextStyle(
@@ -332,19 +355,19 @@ class _SingleQuranState extends State<SingleQuran> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(30),
+                      padding: const EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Quran",
+                          Text("Arabian",
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.green
                             ),
                           ),
-                          SizedBox(height: 15,),
+                          SizedBox(height: 8,),
                           Container(
                             width: size.width,
                               height: size.height*.30,
@@ -378,6 +401,8 @@ class _SingleQuranState extends State<SingleQuran> {
                                             )
                                           ],
                                         ),
+                                        // Text("😀"),
+
                                         SizedBox(width: 3,),
                                         Flexible(
                                           child: Text("${singleSuraVerseList[i]["arabic_verse"]}",
@@ -412,14 +437,14 @@ class _SingleQuranState extends State<SingleQuran> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("అనువదించు",
+                          Text("భావానువాదం",
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.green
                             ),
                           ),
-                          SizedBox(height: 15,),
+                          SizedBox(height: 8,),
                           singleSuraVerseList.isNotEmpty? Column(
                            mainAxisAlignment: MainAxisAlignment.start,
                            crossAxisAlignment: CrossAxisAlignment.start,
@@ -432,7 +457,7 @@ class _SingleQuranState extends State<SingleQuran> {
                                      child: Text("${singleSuraVerseList[i]["telegu_verse"]}",
                                        style: TextStyle(
                                        fontWeight: FontWeight.w500,
-                                       fontSize: 20,
+                                       fontSize: 16,
                                      ),),
                                    ),
                                    SizedBox(width: 3,),
@@ -481,10 +506,9 @@ class _SingleQuranState extends State<SingleQuran> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: singleSuraVerseList.isNotEmpty && singleSuraVerseList[0]["path"] != null ? FloatingActionButton(
         backgroundColor: AppColors.mainColor,
         onPressed: (){
-
           if(isPlay){
             audioPlayer.pause();
           }else{
@@ -495,7 +519,7 @@ class _SingleQuranState extends State<SingleQuran> {
           print("isPlay === $isPlay");
         },
         child: Icon(isPlay? Icons.pause : Icons.play_arrow, color: Colors.white, size: 30,),
-      ),
+      ) : SizedBox(),
     );
   }
 
@@ -534,6 +558,7 @@ class _SingleQuranState extends State<SingleQuran> {
   Future? singleSuraVarsFuture;
   List singleSuraVerseList = [];
   bool isSuraLoading = false;
+  var suravarse;
   singleSura({required String suraId, required String verse})async{
     singleSuraVerseList.clear();
     setState(() =>isSuraLoading=true);
@@ -546,10 +571,28 @@ class _SingleQuranState extends State<SingleQuran> {
           singleSuraVerseList.add(data[i]);
         });
       }
+      print("with out join singleSuraVerseList === ${singleSuraVerseList}");
+      suravarse = singleSuraVerseList.join('${
+          Stack(
+            children: [
+              Icon(Icons.brightness_5, size: 25, color: AppColors.mainColor,),
+              Positioned(
+                top: 7, left: 10,
+                child: Text("${singleSuraVerseList[0]["ayat_no"]}",
+                  style: TextStyle(
+                      color: AppColors.mainColor,
+                      fontSize: 9
+                  ),
+                ),
+              )
+            ],
+          )
+      }');
+      print("with join singleSuraVerseList === ${suravarse}");
+
       // list.forEach((singleSuraVerseList){
       //   arbi_text.write(singleSuraVerseList["arabic_verse"]);
       // });
-      print("singleSuraVerseList ==== ${singleSuraVerseList}");
       setState(() =>isSuraLoading=false);
       return data;
     } else {
@@ -570,7 +613,8 @@ class _SingleQuranState extends State<SingleQuran> {
             [
               {
                 "name":data[i]["telegu_name"],
-                "id": data[i]["id"]
+                "id": data[i]["id"],
+                "index": data[i]["surah_number"]
               }
               ]
         );
