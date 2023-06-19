@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:quran/app_colors.dart';
 import 'package:quran/model/SuraListmodel.dart';
 import 'package:quran/model/singleSuraModel.dart';
@@ -380,44 +381,30 @@ class _SingleQuranState extends State<SingleQuran> {
                                   fit: BoxFit.fill
                                 )
                               ),
-                              child: singleSuraVerseList.isNotEmpty ? ListView(
-
-                                children: [
-                                  for(var i=0; i<singleSuraVerseList.length; i++)
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Stack(
-                                          children: [
-                                            Icon(Icons.brightness_5, size: 25, color: AppColors.mainColor,),
-                                            Positioned(
-                                              top: 7, left: 10,
-                                              child: Text("${singleSuraVerseList[i]["ayat_no"]}",
-                                                style: TextStyle(
-                                                    color: AppColors.mainColor,
-                                                    fontSize: 9
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        // Text("😀"),
-
-                                        SizedBox(width: 3,),
-                                        Flexible(
-                                          child: Text("${singleSuraVerseList[i]["arabic_verse"]}",
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                ],
-                              ):Column(
+                              child:  isSuraLoading == false
+                                  ? Html(
+                                data: '''
+                                ${suravarse["arabic_all"]} 
+                                ''',
+                                style: {
+                                  "h3":Style(
+                                    fontSize: FontSize(20),
+                                    textAlign: TextAlign.right,
+                                    lineHeight: LineHeight(1.4)
+                                  ),
+                                  "span" : Style(
+                                    padding: EdgeInsets.all(20),
+                                    margin: EdgeInsets.all(20),
+                                    width: 20,
+                                    fontSize: FontSize(17),
+                                    color: AppColors.mainColor,
+                                    backgroundColor: Colors.amber,
+                                      letterSpacing: 3,
+                                    border: Border.all(width: 30, color: AppColors.mainColor)
+                                  )
+                                },
+                              )
+                                  :Column(
                                 children: [
                                   for(var i= 0; i<6; i++)
                                     Container(
@@ -432,7 +419,7 @@ class _SingleQuranState extends State<SingleQuran> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 30, top: 0),
+                      padding: const EdgeInsets.only(left: 30, right: 30, top: 5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -444,42 +431,27 @@ class _SingleQuranState extends State<SingleQuran> {
                                 color: Colors.green
                             ),
                           ),
-                          SizedBox(height: 8,),
-                          singleSuraVerseList.isNotEmpty? Column(
-                           mainAxisAlignment: MainAxisAlignment.start,
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             for(var i=0; i<singleSuraVerseList.length; i++)
-                               Row(
-                                 mainAxisAlignment: MainAxisAlignment.start,
-                                 children: [
-                                   Expanded(
-                                     child: Text("${singleSuraVerseList[i]["telegu_verse"]}",
-                                       style: TextStyle(
-                                       fontWeight: FontWeight.w500,
-                                       fontSize: 16,
-                                     ),),
-                                   ),
-                                   SizedBox(width: 3,),
-                                   Stack(
-                                     children: [
-                                       Icon(Icons.brightness_5, size: 25, color: AppColors.mainColor,),
-                                       Positioned(
-                                         top: 7, left: 10,
-                                         child: Text("${singleSuraVerseList[i]["ayat_no"]}",
-                                           style: TextStyle(
-                                               color: AppColors.mainColor,
-                                               fontSize: 9
-                                           ),
-                                         ),
-                                       )
-                                     ],
-                                   ),
-
-                                 ],
-                               ),
-                           ],
-                         ):Column(
+                          suravarse != null
+                              ? Html(
+                            data: '''
+                                ${suravarse["telegu_all"]}
+                                ''',
+                            style: {
+                              "h3":Style(
+                                  fontSize: FontSize(20),
+                                fontWeight: FontWeight.w400
+                              ),
+                              "span" : Style(
+                                  width: 20,
+                                  fontSize: FontSize(17),
+                                  color: AppColors.mainColor,
+                                  backgroundColor: Colors.amber,
+                                  letterSpacing: 3,
+                                  border: Border.all(width: 30, color: AppColors.mainColor),
+                                fontWeight: FontWeight.w600
+                              )
+                            },
+                          ):Column(
                            children: [
                              for(var i= 0; i<6; i++)
                                Container(
@@ -566,29 +538,8 @@ class _SingleQuranState extends State<SingleQuran> {
     var data = jsonDecode(res.body);
     print("singleSuraVerseList data ==== ${data}");
     if(res.statusCode == 200) {
-      for(var i =0;i<data.length; i++){
-        setState(() {
-          singleSuraVerseList.add(data[i]);
-        });
-      }
-      print("with out join singleSuraVerseList === ${singleSuraVerseList}");
-      suravarse = singleSuraVerseList.join('${
-          Stack(
-            children: [
-              Icon(Icons.brightness_5, size: 25, color: AppColors.mainColor,),
-              Positioned(
-                top: 7, left: 10,
-                child: Text("${singleSuraVerseList[0]["ayat_no"]}",
-                  style: TextStyle(
-                      color: AppColors.mainColor,
-                      fontSize: 9
-                  ),
-                ),
-              )
-            ],
-          )
-      }');
-      print("with join singleSuraVerseList === ${suravarse}");
+      suravarse = data;
+      print('suravarse["arabic_all"] ${suravarse["arabic_all"]}');
 
       // list.forEach((singleSuraVerseList){
       //   arbi_text.write(singleSuraVerseList["arabic_verse"]);
