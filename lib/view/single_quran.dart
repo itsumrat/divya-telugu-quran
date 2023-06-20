@@ -371,7 +371,7 @@ class _SingleQuranState extends State<SingleQuran> {
                           SizedBox(height: 8,),
                           Container(
                             width: size.width,
-                              height: size.height*.30,
+                              height: size.height*.35,
                               padding: EdgeInsets.all(20),
                               decoration: BoxDecoration(
                                  // border: Border.all(width: 1, color: AppColors.mainColor),
@@ -382,28 +382,32 @@ class _SingleQuranState extends State<SingleQuran> {
                                 )
                               ),
                               child:  isSuraLoading == false
-                                  ? Html(
+                                  ? SingleChildScrollView(
+                                    child: Html(
                                 data: '''
                                 ${suravarse["arabic_all"]} 
                                 ''',
                                 style: {
-                                  "h3":Style(
-                                    fontSize: FontSize(20),
-                                    textAlign: TextAlign.right,
-                                    lineHeight: LineHeight(1.4)
-                                  ),
-                                  "span" : Style(
-                                    padding: EdgeInsets.all(20),
-                                    margin: EdgeInsets.all(20),
-                                    width: 20,
-                                    fontSize: FontSize(17),
-                                    color: AppColors.mainColor,
-                                    backgroundColor: Colors.amber,
-                                      letterSpacing: 3,
-                                    border: Border.all(width: 30, color: AppColors.mainColor)
-                                  )
+                                    "h3":Style(
+                                      fontSize: FontSize(20),
+                                      textAlign: TextAlign.right,
+                                      lineHeight: LineHeight(1.4),
+                                    ),
+                                    "span" : Style(
+                                        padding: EdgeInsets.only(left: 20, right: 20),
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        width: 50,
+                                        fontSize: FontSize(20),
+                                        color: AppColors.mainColor,
+                                        // backgroundColor: AppColors.mainColor,
+                                        border: Border.all(width: 30, color: AppColors.white),
+                                        fontWeight: FontWeight.w500,
+                                        before: " ❬",
+                                        after: "❭ "
+                                    )
                                 },
-                              )
+                              ),
+                                  )
                                   :Column(
                                 children: [
                                   for(var i= 0; i<6; i++)
@@ -442,13 +446,16 @@ class _SingleQuranState extends State<SingleQuran> {
                                 fontWeight: FontWeight.w400
                               ),
                               "span" : Style(
-                                  width: 20,
-                                  fontSize: FontSize(17),
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                  width: 50,
+                                  fontSize: FontSize(20),
                                   color: AppColors.mainColor,
-                                  backgroundColor: Colors.amber,
-                                  letterSpacing: 3,
-                                  border: Border.all(width: 30, color: AppColors.mainColor),
-                                fontWeight: FontWeight.w600
+                                 // backgroundColor: AppColors.mainColor,
+                                  border: Border.all(width: 30, color: AppColors.white),
+                                  fontWeight: FontWeight.w500,
+                                  before: " ❬",
+                                  after: "❭ "
                               )
                             },
                           ):Column(
