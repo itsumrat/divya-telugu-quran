@@ -351,7 +351,7 @@ class _SingleQuranState extends State<SingleQuran> {
                     ),
                   ),
 
-                Column(
+                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -485,13 +485,13 @@ class _SingleQuranState extends State<SingleQuran> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: singleSuraVerseList.isNotEmpty && singleSuraVerseList[0]["path"] != null ? FloatingActionButton(
+      floatingActionButton: suravarse != null && suravarse["item"]["path"] != null ? FloatingActionButton(
         backgroundColor: AppColors.mainColor,
         onPressed: (){
           if(isPlay){
             audioPlayer.pause();
           }else{
-            audioPlayer.play(UrlSource("https://app.tiptrust.in/storage/app/${singleSuraVerseList[0]["path"]}"));
+            audioPlayer.play(UrlSource("https://app.tiptrust.in/storage/app/${suravarse["item"]["path"]}"));
           }
           setState(() =>isPlay = !isPlay);
 
@@ -546,7 +546,7 @@ class _SingleQuranState extends State<SingleQuran> {
     print("singleSuraVerseList data ==== ${data}");
     if(res.statusCode == 200) {
       suravarse = data;
-      print('suravarse["arabic_all"] ${suravarse["arabic_all"]}');
+      print('suravarse["arabic_all"] ${suravarse["item"]["path"]}');
 
       // list.forEach((singleSuraVerseList){
       //   arbi_text.write(singleSuraVerseList["arabic_verse"]);
