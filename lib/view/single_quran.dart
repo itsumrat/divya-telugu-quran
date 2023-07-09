@@ -361,7 +361,7 @@ class _SingleQuranState extends State<SingleQuran> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Arabian",
+                          Text("Arabic",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
