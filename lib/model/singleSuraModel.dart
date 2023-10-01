@@ -2,7 +2,6 @@
 //
 //     final singleSuraModel = singleSuraModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<SingleSuraModel> singleSuraModelFromJson(String str) => List<SingleSuraModel>.from(json.decode(str).map((x) => SingleSuraModel.fromJson(x)));

@@ -13,9 +13,9 @@ class _FlashState extends State<Flash> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(milliseconds: 2000), () {
+    Future.delayed(const Duration(milliseconds: 2000), () {
       // Do something
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Home()), (route) => false);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const Home()), (route) => false);
     });
   }
   @override
@@ -26,7 +26,7 @@ class _FlashState extends State<Flash> {
       body: Container(
         height: size.height,
         width: size.width,
-        margin: EdgeInsets.only(top: 50),
+        margin: const EdgeInsets.only(top: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,8 +37,8 @@ class _FlashState extends State<Flash> {
                 height: 100, width: 100,
               ),
             ),
-            SizedBox(height: 30,),
-            Text("దివ్య ఖుర్ఆన్",
+            const SizedBox(height: 30,),
+            const Text("దివ్య ఖుర్ఆన్",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 25,
@@ -50,7 +50,7 @@ class _FlashState extends State<Flash> {
       ),
       bottomNavigationBar: Container(
         height: 60, width: 60,
-        margin: EdgeInsets.only(bottom: 50),
+        margin: const EdgeInsets.only(bottom: 50),
         child: Image.asset("assets/images/sponser.jpeg", height: 40, width: 40,),
       ),
     );

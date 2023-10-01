@@ -10,7 +10,7 @@ class ApiController{
 
   //sura list controller
   static Future<SuraListModel> suraListController()async{
-    var res = await http.get(Uri.parse("${AppConfig.SURA_LIST}"));
+    var res = await http.get(Uri.parse(AppConfig.SURA_LIST));
     var data = jsonDecode(res.body) as Map<String, dynamic>;
     debugPrint("sura list ====== $data");
     debugPrint("sura list status code ====== ${res.statusCode}");
@@ -22,7 +22,7 @@ class ApiController{
   }
   //sura list controller
   static Future rendomVerse()async{
-    var res = await http.get(Uri.parse("${AppConfig.RANDOM_DERSE}"));
+    var res = await http.get(Uri.parse(AppConfig.RANDOM_DERSE));
     var data = jsonDecode(res.body);
     debugPrint("rendomVerse list ====== $data");
     debugPrint("rendomVerse list status code ====== ${res.statusCode}");
@@ -39,7 +39,7 @@ class ApiController{
     List list = [];
     var res = await http.get(Uri.parse("${AppConfig.SURA_VERSE_LIST}$suraId/$verse"));
     var data = jsonDecode(res.body);
-    debugPrint("singleSura==== ${data}");
+    debugPrint("singleSura==== $data");
     debugPrint("singleSura==== ${res.statusCode}");
     debugPrint("singleSura==== ${AppConfig.SURA_VERSE_LIST}$suraId/$verse");
     if(res.statusCode == 200) {

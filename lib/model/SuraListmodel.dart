@@ -2,7 +2,6 @@
 //
 //     final suraListModel = suraListModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 SuraListModel suraListModelFromJson(String str) => SuraListModel.fromJson(json.decode(str));

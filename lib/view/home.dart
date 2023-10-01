@@ -37,11 +37,11 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
             automaticallyImplyLeading: false,
           backgroundColor: AppColors.mainColor,
-          title: Text("దివ్య ఖుర్ఆన్"),
+          title: const Text("దివ్య ఖుర్ఆన్"),
           centerTitle: true,
         ),
         body: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
                 children: [
                   Container(
                     width: size.width,
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: AppColors.mainColor
@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
 
-                        SizedBox(height: 15,),
+                        const SizedBox(height: 15,),
 
                         FutureBuilder(
                             future: rendomVerse,
@@ -89,14 +89,14 @@ class _HomeState extends State<Home> {
                               }else if(snapshot.hasData){
                                 return Text("${snapshot.data["quote"]["telegu_verse"]}",
                                   overflow: TextOverflow.clip,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400
                                   ),
                                 );
                               }else{
-                                return Text("No date found here.",
+                                return const Text("No date found here.",
                                   overflow: TextOverflow.clip,
                                   style: TextStyle(
                                       fontSize: 15,
@@ -145,12 +145,12 @@ class _HomeState extends State<Home> {
                           isVerse = false;
                         });
                       },
-                      icon: Icon(Icons.cancel,color: AppColors.white,),
+                      icon: const Icon(Icons.cancel,color: AppColors.white,),
                     ),
                   )
                 ],
-              ) : SizedBox() ,
-              isVerse ? SizedBox(height: 30,) : SizedBox(),
+              ) : const SizedBox() ,
+              isVerse ? const SizedBox(height: 30,) : const SizedBox(),
 
               FutureBuilder<SuraListModel>(
                   future: suraList,
@@ -159,13 +159,13 @@ class _HomeState extends State<Home> {
                       return  Expanded(
                           child: ListView.builder(
                               itemCount: 10,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (_, index){
                                 return Shimmer.fromColors(
                                   baseColor:  Colors.white,
                                   highlightColor: Colors.grey.shade100,
                                   child: Container(
-                                    margin: EdgeInsets.all(10),
+                                    margin: const EdgeInsets.all(10),
                                     height: 60,
                                     width: size.width,
                                     color: AppColors.white,
@@ -186,8 +186,8 @@ class _HomeState extends State<Home> {
                                 child: Column(
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(0),
-                                      decoration: BoxDecoration(
+                                      padding: const EdgeInsets.all(0),
+                                      decoration: const BoxDecoration(
                                         color: AppColors.white,
                                         //border: Border.all(width: 1, color: AppColors.mainColor),
                                       ),
@@ -201,14 +201,14 @@ class _HomeState extends State<Home> {
                                               color: AppColors.mainColor,
                                               borderRadius: BorderRadius.circular(5)
                                           ),
-                                          child: Center(child: Text("${data.surahNumber}", style: TextStyle(
+                                          child: Center(child: Text(data.surahNumber, style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: AppColors.white
                                           ),),),
                                         ),
-                                        title: Text("${data.teleguName}",
-                                          style: TextStyle(
+                                        title: Text(data.teleguName,
+                                          style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w600,
                                               color: AppColors.mainColor
@@ -216,14 +216,14 @@ class _HomeState extends State<Home> {
                                         ),
                                         subtitle: Padding(
                                           padding: const EdgeInsets.only(top: 0.0),
-                                          child: Text("${data.englishName}",
-                                            style: TextStyle(
+                                          child: Text(data.englishName,
+                                            style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w300,
                                             ),
                                           ),
                                         ),
-                                        trailing: Icon(Icons.double_arrow_outlined, color: AppColors.mainColor,),
+                                        trailing: const Icon(Icons.double_arrow_outlined, color: AppColors.mainColor,),
                                       ),
                                     ),
                                     Divider(height: 2, color: Colors.grey.shade300,)
@@ -236,7 +236,7 @@ class _HomeState extends State<Home> {
                     }else{
                       return Padding(
                         padding: EdgeInsets.only(top: size.height*.30),
-                        child: Center(child: Text("No Sura foun.")),
+                        child: const Center(child: Text("No Sura foun.")),
                       );
                     }
 
